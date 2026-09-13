@@ -1,0 +1,15 @@
+# dataset (too large / shouldn't live in git)
+data/
+milk10k.zip
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# jupyter
+.ipynb_checkpoints/
+
+# os
+.DS_Store
