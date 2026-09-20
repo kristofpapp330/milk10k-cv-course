@@ -1,0 +1,14 @@
+column,test,p_value,likely_informative
+diagnosis_3,chi-square,0.0,True
+diagnosis_4,chi-square,0.0,True
+diagnosis_2,chi-square,0.0,True
+age_approx,ANOVA,0.0,True
+diagnosis_confirm_type,chi-square,5.33837310580175e-221,True
+anatom_site_general,chi-square,5.472274146560946e-51,True
+image_manipulation,chi-square,1.3811172181237624e-44,True
+sex,chi-square,1.4992978992068524e-20,True
+anatom_site_special,chi-square,1.938851890907707e-15,True
+copyright_license,chi-square,1.0,False
+attribution,chi-square,1.0,False
+image_type,chi-square,1.0,False
+melanocytic,chi-square,1.0,False

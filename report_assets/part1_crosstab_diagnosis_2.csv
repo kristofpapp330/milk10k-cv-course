@@ -1,0 +1,20 @@
+diagnosis_2,Benign,Indeterminate,Malignant
+Benign - Other,16,0,0
+Benign adnexal epithelial proliferations - Apocrine or Eccrine,2,0,0
+Benign adnexal epithelial proliferations - Follicular,6,0,0
+Benign adnexal epithelial proliferations - Sebaceous,4,0,0
+Benign epidermal proliferations,1090,0,0
+Benign melanocytic proliferations,1492,0,0
+Benign soft tissue proliferations - Fibro-histiocytic,112,0,0
+Benign soft tissue proliferations - Vascular,98,0,0
+Collision - At least one malignant proliferation,0,0,18
+Collision - Only benign proliferations,14,0,0
+Cysts,4,0,0
+Exogenous,12,0,0
+Flat melanotic pigmentations - not melanocytic nevus,18,0,0
+Indeterminate epidermal proliferations,0,246,0
+Inflammatory or infectious diseases,94,0,0
+Malignant adnexal epithelial proliferations - Follicular,0,0,5044
+Malignant epidermal proliferations,0,0,1306
+Malignant melanocytic proliferations (Melanoma),0,0,900
+Mast cell proliferations,4,0,0

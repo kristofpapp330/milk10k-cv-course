@@ -1,0 +1,15 @@
+column,inferred_type,missing_fraction,n_unique
+age_approx,numeric,0.0038,17
+anatom_site_general,categorical,0.3733,4
+anatom_site_special,categorical,0.9803,2
+attribution,categorical,0.0,1
+concomitant_biopsy,boolean,0.0,2
+copyright_license,categorical,0.0,1
+diagnosis_2,categorical,0.0,19
+diagnosis_3,categorical,0.0151,27
+diagnosis_4,categorical,0.8548,15
+diagnosis_confirm_type,categorical,0.0,2
+image_manipulation,categorical,0.0,2
+image_type,categorical,0.0,2
+melanocytic,categorical,0.7718,1
+sex,categorical,0.0,2

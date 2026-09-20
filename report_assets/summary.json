@@ -1,0 +1,19 @@
+{
+  "n_images_available": 10480,
+  "class_counts": {
+    "Malignant": 7268,
+    "Benign": 2966,
+    "Indeterminate": 246
+  },
+  "most_associated_fields": [
+    "diagnosis_3",
+    "diagnosis_4",
+    "diagnosis_2"
+  ],
+  "least_associated_fields": [
+    "attribution",
+    "image_type",
+    "melanocytic"
+  ],
+  "skipped_in_batch_demo": 0
+}
