@@ -13,6 +13,8 @@ MISSING_DECISIONS = {
     "sex": "replace with an explicit 'unknown' category",
     "anatom_site_general": "explicit 'unknown' category; missingness is informative (NV twice as frequent, Part A Q4), so it is NOT used as input in Milestone 1",
     "skin_tone_class": "leave NaN; used only to analyse bias, not as an input",
+    "melanocytic": "leave NaN; derived from the diagnosis (banned as an input, see section 4)",
+    "anatom_site_special": "leave NaN; 98% missing, too sparse to use (not an input)",
     "diagnosis_2": "leave NaN; label column, never an input",
     "diagnosis_3": "leave NaN; label column, never an input",
     "diagnosis_4": "leave NaN; label column, never an input",
@@ -34,6 +36,7 @@ BANNED_COLUMNS = {
     "copyright_license": "tied to the contributor -> acquisition shortcut",
     "lesion_id": "identifier (needed only for grouping the split)",
     "isic_id": "identifier",
+    "melanocytic": "says whether the lesion is melanocytic, which is part of the diagnosis -> label leak",
 }
 
 

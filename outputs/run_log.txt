@@ -113,9 +113,9 @@ Benign       1483
 B4. Data-quality report
 ==============================================================================
              column  % missing                                                                                                                             decision
-anatom_site_special       98.0                                                                                                 leave NaN; not used as a model input
+anatom_site_special       98.0                                                                             leave NaN; 98% missing, too sparse to use (not an input)
         diagnosis_4       85.5                                                                                              leave NaN; label column, never an input
-        melanocytic       77.2                                                                                                 leave NaN; not used as a model input
+        melanocytic       77.2                                                            leave NaN; derived from the diagnosis (banned as an input, see section 4)
 anatom_site_general       37.3 explicit 'unknown' category; missingness is informative (NV twice as frequent, Part A Q4), so it is NOT used as input in Milestone 1
         diagnosis_3        1.5                                                                                              leave NaN; label column, never an input
          age_approx        0.4                                                                 impute with the TRAIN median (only if age is used as an input later)
@@ -191,7 +191,7 @@ B8. Dataset / DataLoaders, imbalance handling, sanity checks
   val batch:   images (32, 3, 224, 224), min -5.086, max 3.142
   label histogram of 20 train batches WITH WeightedRandomSampler: {'Benign': 330, 'Malignant': 310}
   (without the sampler the expected share would be {'Benign': 0.283, 'Malignant': 0.717})
-  time to load one train epoch (3143 images, num_workers=0): 48.8 s
+  time to load one train epoch (3143 images, num_workers=0): 50.9 s
   saved figure: outputs/figures/train_batch.png
 
 ==============================================================================

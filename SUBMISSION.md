@@ -1,7 +1,7 @@
 # Submission — Homework Sessions 1–3 + Project Milestone 1
 
 **Name:** Kristof Papp
-**Repository:** REPLACE_WITH_REPO_URL
+**Repository:** https://github.com/kristofpapp330/milk10k-cv-course
 
 ## Part A
 - Notebook: [notebooks/homework_part_a.ipynb](notebooks/homework_part_a.ipynb)

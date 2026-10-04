@@ -6,9 +6,9 @@ Generated from `metadata.csv`: 10480 images, 5240 lesions.
 
 | column | % missing | decision |
 |---|---|---|
-| anatom_site_special | 98.0 | leave NaN; not used as a model input |
+| anatom_site_special | 98.0 | leave NaN; 98% missing, too sparse to use (not an input) |
 | diagnosis_4 | 85.5 | leave NaN; label column, never an input |
-| melanocytic | 77.2 | leave NaN; not used as a model input |
+| melanocytic | 77.2 | leave NaN; derived from the diagnosis (banned as an input, see section 4) |
 | anatom_site_general | 37.3 | explicit 'unknown' category; missingness is informative (NV twice as frequent, Part A Q4), so it is NOT used as input in Milestone 1 |
 | diagnosis_3 | 1.5 | leave NaN; label column, never an input |
 | age_approx | 0.4 | impute with the TRAIN median (only if age is used as an input later) |
@@ -76,3 +76,4 @@ Row percentages:
 | copyright_license | tied to the contributor -> acquisition shortcut |
 | lesion_id | identifier (needed only for grouping the split) |
 | isic_id | identifier |
+| melanocytic | says whether the lesion is melanocytic, which is part of the diagnosis -> label leak |
