@@ -7,21 +7,14 @@ Usage (from the project root, with milk10k/ already downloaded):
 
     python run_analysis.py
 
-Edit DATA_DIR below if your dataset lives somewhere else.
+The data folder comes from milk10k_pipeline/config.py (Milestone 1: one place for paths).
 """
 import matplotlib
 matplotlib.use("Agg")  # save figures to disk; no interactive display needed
 import matplotlib.pyplot as plt
 
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent / "src"))
-
 from pathlib import Path
 import json
-import sys
-
-sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from milk10k_pipeline import metadata_analysis as ma
 from milk10k_pipeline import color_analysis as ca
@@ -30,8 +23,7 @@ from milk10k_pipeline import data_loader as dl
 from milk10k_pipeline import visualizer as viz
 
 # ---------------------------------------------------------------------
-DATA_DIR = Path("data/milk10k")          # <-- adjust if needed
-IMG_DIR = DATA_DIR / "images"
+from milk10k_pipeline.config import DATA_DIR, IMG_DIR
 TARGET_COL = "diagnosis_1"
 OUT_DIR = Path("report_assets")
 OUT_DIR.mkdir(exist_ok=True)

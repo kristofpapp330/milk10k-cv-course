@@ -1,4 +1,4 @@
-# dataset (too large / shouldn't live in git)
+# raw dataset: too large, never committed
 data/
 milk10k.zip
 
@@ -13,3 +13,4 @@ venv/
 
 # os
 .DS_Store
+Thumbs.db
