@@ -1,0 +1,20 @@
+{
+  "primary": {
+    "Benign": 1.7677,
+    "Malignant": 0.6972
+  },
+  "stretch_11_class": {
+    "AKIEC": 1.5786,
+    "BCC": 0.1887,
+    "BEN_OTH": 10.9895,
+    "BKL": 0.8738,
+    "DF": 9.5242,
+    "INF": 9.5242,
+    "MAL_OTH": 57.1455,
+    "MEL": 1.0582,
+    "NV": 0.6378,
+    "SCCKA": 1.0061,
+    "VASC": 10.2045
+  },
+  "formula": "n_train_images / (n_classes * count_of_class), computed on the TRAIN split only"
+}

@@ -1,0 +1,199 @@
+Data folder: C:\Users\krisi\milk10k-cv-course\data\milk10k
+metadata: 10480 images | training_gt: 5240 lesions | image files found: 10480
+
+==============================================================================
+B1. Full-dataset integrity check
+==============================================================================
+ image_type  n_rows  n_missing  n_unreadable  width_min  width_median  width_max  height_min  height_median  height_max
+        all   10480          0             0        600         600.0        600         450          450.0         450
+   clinical    5240          0             0        600         600.0        600         450          450.0         450
+dermoscopic    5240          0             0        600         600.0        600         450          450.0         450
+  rows without an image file: 0 []
+  unreadable files (Image.verify failed): 0
+
+==============================================================================
+B2. Label-centred EDA
+==============================================================================
+Lesions per diagnosis_1:
+diagnosis_1
+Malignant        3634
+Benign           1483
+Indeterminate     123
+Lesions per 11-class label:
+dx
+BCC        2522
+NV          746
+BKL         544
+SCCKA       473
+MEL         450
+AKIEC       303
+DF           52
+INF          50
+VASC         47
+BEN_OTH      44
+MAL_OTH       9
+  saved figure: outputs/figures/class_distribution.png
+  saved figure: outputs/figures/dx_vs_diagnosis1.png
+Mapping 11-class -> diagnosis_1:
+diagnosis_1  Benign  Indeterminate  Malignant
+dx                                           
+AKIEC             0            123        180
+BCC               0              0       2522
+BEN_OTH          44              0          0
+BKL             544              0          0
+DF               52              0          0
+INF              50              0          0
+MAL_OTH           0              0          9
+MEL               0              0        450
+NV              746              0          0
+SCCKA             0              0        473
+VASC             47              0          0
+Session 2 findings on the full dataset:
+  - Severe class imbalance (BCC dominant, MAL_OTH tiny): BCC 2522 lesions vs MAL_OTH 9 (ratio 280:1); Malignant 3634 vs Benign 1483 -> still true? yes
+  - Malignant lesions come from older patients (mild risk factor): mean age Malignant 65.1 vs Benign 51.6 years -> still true? yes
+  - Anatomical site is associated with the diagnosis: % Malignant by site: head/neck 72.2, lower extremity 67.6, missing 65.2, oral/genital 25.0, upper extremity 77.7; NV is 21.1% of lesions WITHOUT site vs 10.1% with site -> still true? yes, and missing site is itself informative
+  - Mean colour/brightness alone does not separate Benign from Malignant: ROC-AUC of mean brightness (dermoscopic, 600 images) = 0.457 -> still true? yes
+  - Indeterminate images looked darker (small sample): mean brightness: Benign 152.7, Indeterminate 141.5, Malignant 150.0 -> still true? yes
+  saved figure: outputs/figures/class_gallery.png
+
+==============================================================================
+B3. Label strategy
+==============================================================================
+{
+  "primary": {
+    "source_column": "diagnosis_1",
+    "class_names": [
+      "Benign",
+      "Malignant"
+    ],
+    "mapping": {
+      "Benign": 0,
+      "Malignant": 1,
+      "Indeterminate": 1
+    },
+    "decision": "Indeterminate merged into Malignant (= 'needs clinical action'); 2-class task."
+  },
+  "stretch_11_class": {
+    "source_column": "dx",
+    "class_names": [
+      "AKIEC",
+      "BCC",
+      "BEN_OTH",
+      "BKL",
+      "DF",
+      "INF",
+      "MAL_OTH",
+      "MEL",
+      "NV",
+      "SCCKA",
+      "VASC"
+    ],
+    "mapping": {
+      "AKIEC": 0,
+      "BCC": 1,
+      "BEN_OTH": 2,
+      "BKL": 3,
+      "DF": 4,
+      "INF": 5,
+      "MAL_OTH": 6,
+      "MEL": 7,
+      "NV": 8,
+      "SCCKA": 9,
+      "VASC": 10
+    },
+    "decision": "All 11 classes kept; rare classes (<~50 lesions) handled with class weights; MAL_OTH (9 lesions) is reported with a warning because its metrics are very noisy."
+  }
+}
+Primary target after merging:
+label
+Malignant    3757
+Benign       1483
+
+==============================================================================
+B4. Data-quality report
+==============================================================================
+             column  % missing                                                                                                                             decision
+anatom_site_special       98.0                                                                                                 leave NaN; not used as a model input
+        diagnosis_4       85.5                                                                                              leave NaN; label column, never an input
+        melanocytic       77.2                                                                                                 leave NaN; not used as a model input
+anatom_site_general       37.3 explicit 'unknown' category; missingness is informative (NV twice as frequent, Part A Q4), so it is NOT used as input in Milestone 1
+        diagnosis_3        1.5                                                                                              leave NaN; label column, never an input
+         age_approx        0.4                                                                 impute with the TRAIN median (only if age is used as an input later)
+{'lesions': 5240, 'lesions with exactly 2 images': 5240, 'lesions with 1 dermoscopic + 1 clinical': 5240}
+image_manipulation vs diagnosis_1 (row %):
+diagnosis_1         Benign  Indeterminate  Malignant
+image_manipulation                                  
+altered               39.7           12.8       47.5
+instrument only       27.9            2.0       70.1
+image_type vs diagnosis_1 (row %):
+diagnosis_1         Benign  Indeterminate  Malignant
+image_type                                          
+clinical: close-up    28.3            2.3       69.4
+dermoscopic           28.3            2.3       69.4
+  saved outputs/data_quality_report.md
+
+==============================================================================
+B5. Splits (lesion level, grouped + stratified on the 11-class label)
+==============================================================================
+  lesion overlap train-val: 0
+  lesion overlap train-test: 0
+  lesion overlap val-test: 0
+  lesions with exactly 2 images (1 dermoscopic + 1 clinical) in their split: 5240 of 5240
+11-class proportions per split (% of lesions):
+split    overall  train    val   test
+dx                                   
+AKIEC       5.78   5.76   5.82   5.82
+BCC        48.13  48.17  48.09  48.05
+BEN_OTH     0.84   0.83   0.86   0.86
+BKL        10.38  10.40  10.31  10.39
+DF          0.99   0.95   1.05   1.05
+INF         0.95   0.95   0.95   0.95
+MAL_OTH     0.17   0.16   0.19   0.19
+MEL         8.59   8.59   8.59   8.58
+NV         14.24  14.25  14.22  14.20
+SCCKA       9.03   9.04   9.06   8.96
+VASC        0.90   0.89   0.86   0.95
+  maximum deviation from the global proportions: 0.084 percentage points
+diagnosis_1 proportions per split (%):
+split           test  train    val
+diagnosis_1                       
+Benign         28.41  28.29  28.24
+Indeterminate   2.19   2.29   2.67
+Malignant      69.40  69.42  69.08
+  saved outputs/splits/train.csv: 3143 lesions, 6286 images
+  saved outputs/splits/val.csv: 1048 lesions, 2096 images
+  saved outputs/splits/test.csv: 1049 lesions, 2098 images
+
+==============================================================================
+B6. Input resolution and views
+==============================================================================
+  dermoscopic images: shorter side min 450, median 450, max 450
+  100.0% have shorter side >= 256 and 100.0% >= 224 -> resizing only DOWN-samples
+  views used: ('dermoscopic',) (option b: one dermoscopic image per lesion -> 1 image = 1 lesion)
+
+==============================================================================
+B7. Transforms: normalization stats (train only), determinism, augmentation figure
+==============================================================================
+  train mean [0.6743, 0.535, 0.5294], std [0.1318, 0.1362, 0.1498] -> saved outputs/normalization_stats.json
+  eval_transform applied twice -> identical tensors: True
+  saved figure: outputs/figures/augmentation_examples.png
+
+==============================================================================
+B8. Dataset / DataLoaders, imbalance handling, sanity checks
+==============================================================================
+  train: 3143 images, 99 batches of 32
+  val: 1048 images, 33 batches of 32
+  test: 1049 images, 33 batches of 32
+  train class counts {'Benign': 889, 'Malignant': 2254} -> imbalance ratio 2.54:1
+  11-class train imbalance ratio: 1514:5 = 303:1
+  class weights -> saved outputs/class_weights.json: {'Benign': 1.7677, 'Malignant': 0.6972}
+  train batch: images (32, 3, 224, 224) torch.float32, min -5.116, max 3.089, labels (32,) torch.int64, first ids ['ISIC_4842466', 'ISIC_4083158', 'ISIC_0314216']
+  val batch:   images (32, 3, 224, 224), min -5.086, max 3.142
+  label histogram of 20 train batches WITH WeightedRandomSampler: {'Benign': 330, 'Malignant': 310}
+  (without the sampler the expected share would be {'Benign': 0.283, 'Malignant': 0.717})
+  time to load one train epoch (3143 images, num_workers=0): 48.8 s
+  saved figure: outputs/figures/train_batch.png
+
+==============================================================================
+DONE -- all outputs are in the outputs/ folder
+==============================================================================

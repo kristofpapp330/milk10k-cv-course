@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-04",
+  "seed": 42,
+  "B1": {
+    "n_images": 10480,
+    "missing": 0,
+    "unreadable": 0
+  },
+  "B2": {
+    "diagnosis_1_counts": {
+      "Malignant": 3634,
+      "Benign": 1483,
+      "Indeterminate": 123
+    },
+    "dx_counts": {
+      "BCC": 2522,
+      "NV": 746,
+      "BKL": 544,
+      "SCCKA": 473,
+      "MEL": 450,
+      "AKIEC": 303,
+      "DF": 52,
+      "INF": 50,
+      "VASC": 47,
+      "BEN_OTH": 44,
+      "MAL_OTH": 9
+    },
+    "auc_brightness": 0.457
+  },
+  "B5": {
+    "seed": 42,
+    "date": "2026-10-04",
+    "val_size": 0.2,
+    "test_size": 0.2,
+    "stratified_on": "dx",
+    "grouped_by": "lesion_id",
+    "n_lesions": {
+      "train": 3143,
+      "val": 1048,
+      "test": 1049
+    },
+    "max_class_deviation_pp": 0.084
+  },
+  "B6": {
+    "pct_short_side_ge_256": 100.0,
+    "pct_short_side_ge_224": 100.0,
+    "short_side_median": 450.0
+  },
+  "B8": {
+    "train_counts": [
+      889,
+      2254
+    ],
+    "imbalance_ratio_train": 2.54,
+    "imbalance_ratio_train_11class": 302.8,
+    "class_weights": {
+      "Benign": 1.7677,
+      "Malignant": 0.6972
+    },
+    "hist_20_batches": [
+      330,
+      310
+    ],
+    "epoch_seconds": 48.8,
+    "mean": [
+      0.6743,
+      0.535,
+      0.5294
+    ],
+    "std": [
+      0.1318,
+      0.1362,
+      0.1498
+    ]
+  }
+}

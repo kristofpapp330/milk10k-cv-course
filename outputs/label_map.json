@@ -1,0 +1,45 @@
+{
+  "primary": {
+    "source_column": "diagnosis_1",
+    "class_names": [
+      "Benign",
+      "Malignant"
+    ],
+    "mapping": {
+      "Benign": 0,
+      "Malignant": 1,
+      "Indeterminate": 1
+    },
+    "decision": "Indeterminate merged into Malignant (= 'needs clinical action'); 2-class task."
+  },
+  "stretch_11_class": {
+    "source_column": "dx",
+    "class_names": [
+      "AKIEC",
+      "BCC",
+      "BEN_OTH",
+      "BKL",
+      "DF",
+      "INF",
+      "MAL_OTH",
+      "MEL",
+      "NV",
+      "SCCKA",
+      "VASC"
+    ],
+    "mapping": {
+      "AKIEC": 0,
+      "BCC": 1,
+      "BEN_OTH": 2,
+      "BKL": 3,
+      "DF": 4,
+      "INF": 5,
+      "MAL_OTH": 6,
+      "MEL": 7,
+      "NV": 8,
+      "SCCKA": 9,
+      "VASC": 10
+    },
+    "decision": "All 11 classes kept; rare classes (<~50 lesions) handled with class weights; MAL_OTH (9 lesions) is reported with a warning because its metrics are very noisy."
+  }
+}

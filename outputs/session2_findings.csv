@@ -1,0 +1,6 @@
+Session 2 finding,full dataset,still true?,consequence for the pipeline
+"Severe class imbalance (BCC dominant, MAL_OTH tiny)",BCC 2522 lesions vs MAL_OTH 9 (ratio 280:1); Malignant 3634 vs Benign 1483,yes,"stratified grouped split, class-weighted loss + WeightedRandomSampler, balanced metrics instead of accuracy"
+Malignant lesions come from older patients (mild risk factor),mean age Malignant 65.1 vs Benign 51.6 years,yes,"genuine risk factor, not a shortcut; may be added as a metadata input later (train-median imputation); image-only in Milestone 1"
+Anatomical site is associated with the diagnosis,"% Malignant by site: head/neck 72.2, lower extremity 67.6, missing 65.2, oral/genital 25.0, upper extremity 77.7; NV is 21.1% of lesions WITHOUT site vs 10.1% with site","yes, and missing site is itself informative",missingness is a dataset artefact -> potential shortcut; site NOT used as an input in Milestone 1
+Mean colour/brightness alone does not separate Benign from Malignant,"ROC-AUC of mean brightness (dermoscopic, 600 images) = 0.457",yes,need a CNN learning texture/shape; colour augmentation kept mild (A3.5) so the small colour signal is preserved
+Indeterminate images looked darker (small sample),"mean brightness: Benign 152.7, Indeterminate 141.5, Malignant 150.0",yes,no special treatment; Indeterminate is merged into Malignant anyway (B3)

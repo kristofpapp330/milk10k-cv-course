@@ -1,0 +1,14 @@
+{
+  "seed": 42,
+  "date": "2026-10-04",
+  "val_size": 0.2,
+  "test_size": 0.2,
+  "stratified_on": "dx",
+  "grouped_by": "lesion_id",
+  "n_lesions": {
+    "train": 3143,
+    "val": 1048,
+    "test": 1049
+  },
+  "max_class_deviation_pp": 0.084
+}
