@@ -24,6 +24,11 @@ quality              -- B4: data-quality report
 splits               -- B5: leak-free lesion-level train/val/test split
 transforms           -- B7: train_transform / eval_transform
 data_loader          -- B8: MILK10kDataset + DataLoaders (upgrade of the Session 2 loader)
+
+Added in Milestone 2 (classical ML baseline)
+--------------------------------------------
+features             -- handcrafted colour / texture / GLCM / ABCD features and the feature sets
+classical            -- classical models, validation-based selection, metrics, bootstrap intervals
 """
 
 from . import metadata_analysis
@@ -32,6 +37,7 @@ from . import preprocessing
 from . import data_loader
 from . import visualizer
 from . import config, data_io, integrity, labels, quality, splits, transforms
+from . import features, classical
 
 __all__ = [
     "metadata_analysis",
@@ -46,4 +52,6 @@ __all__ = [
     "quality",
     "splits",
     "transforms",
+    "features",
+    "classical",
 ]

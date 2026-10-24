@@ -1,4 +1,4 @@
-# Submission — Homework Sessions 1–3 + Project Milestone 1
+# Submissions — Homework Sessions 1–3, Project Milestone 1 and Milestone 2
 
 **Name:** Kristof Papp
 **Repository:** https://github.com/kristofpapp330/milk10k-cv-course
@@ -38,3 +38,18 @@
 | B8 batch of 16 after transforms | [outputs/figures/train_batch.png](outputs/figures/train_batch.png) |
 | B8 printed sanity checks (full run log) | [outputs/run_log.txt](outputs/run_log.txt) |
 | B9 report | [reports/milestone1_report.md](reports/milestone1_report.md) |
+
+## Milestone 2 — Classical ML baseline (Session 5)
+| item | file |
+|---|---|
+| notebook: experiments + report | [notebooks/classical_baseline.ipynb](notebooks/classical_baseline.ipynb) |
+| notebook exported to PDF | [notebooks/classical_baseline.pdf](notebooks/classical_baseline.pdf) |
+| feature extraction code | [milk10k_pipeline/features.py](milk10k_pipeline/features.py) |
+| models, selection, metrics code | [milk10k_pipeline/classical.py](milk10k_pipeline/classical.py) |
+| tests | [tests/test_features.py](tests/test_features.py) |
+| feature table (all 5,240 dermoscopic images) | [outputs/baseline/features_dermoscopic.csv](outputs/baseline/features_dermoscopic.csv) |
+| validation results, every configuration (binary) | [outputs/baseline/val_results_binary.csv](outputs/baseline/val_results_binary.csv) |
+| validation results, every configuration (3-class) | [outputs/baseline/val_results_3class.csv](outputs/baseline/val_results_3class.csv) |
+| final test results | [outputs/baseline/test_results.json](outputs/baseline/test_results.json) |
+| figures | `outputs/figures/baseline_*.png` |
+

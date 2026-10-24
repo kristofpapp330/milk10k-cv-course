@@ -37,9 +37,10 @@ Commands (run from the repository root):
 
 | what | command |
 |---|---|
-| tests (no dataset needed) | `python tests/test_pipeline.py` |
+| tests (no dataset needed) | `python tests/test_pipeline.py` and `python tests/test_features.py` |
 | full Milestone 1 pipeline: integrity check, EDA figures, label map, quality report, splits, normalization stats, transforms check, class weights, DataLoader sanity checks | `python run_milestone1.py` |
 | Part A homework | open `notebooks/homework_part_a.ipynb` → Restart & Run All |
+| Milestone 2: classical ML baseline (features, model comparison, test evaluation, report) | open `notebooks/classical_baseline.ipynb` → Restart & Run All (needs the Milestone 1 splits in `outputs/splits/`) |
 | Session 2 analysis (metadata + colour figures) | `python run_analysis.py` |
 
 `run_milestone1.py` takes a few minutes (it verifies all 10,480 images and loads one training epoch) and
@@ -69,19 +70,26 @@ milk10k-cv-course/
 │   ├── labels.py                 B3: label strategy, label_map.json, lesion-level table
 │   ├── quality.py                B4: data-quality report (missing values, pair checks, shortcuts, banned columns)
 │   ├── splits.py                 B5: lesion-level train/val/test split and its verification
-│   └── transforms.py             B7: train_transform / eval_transform + augmentation justification table
+│   ├── transforms.py             B7: train_transform / eval_transform + augmentation justification table
+│   ├── features.py               M2: handcrafted features (colour, histogram, texture, GLCM, ABCD) + feature sets
+│   └── classical.py              M2: classical models + grids, validation selection, metrics, bootstrap CI
 ├── tests/
-│   └── test_pipeline.py          split properties (10 seeds), deterministic eval transform, fail-loudly, class weights
+│   ├── test_pipeline.py          split properties (10 seeds), deterministic eval transform, fail-loudly, class weights
+│   └── test_features.py          M2: features reproduce the Session 5 hand calculations, models beat majority
 ├── notebooks/
 │   ├── 01_eda.ipynb              Session 1 exploration
 │   ├── homework_part_a.ipynb     Part A exercises (Sessions 1–3)
-│   └── homework_part_a.pdf       Part A exported to PDF
+│   ├── homework_part_a.pdf       Part A exported to PDF
+│   ├── homework_filters.ipynb    Session 4 homework (learned filters, Gaussian blur, Canny vs Sobel)
+│   └── classical_baseline.ipynb  Milestone 2: classical ML baseline, experiments + report (+ PDF)
 ├── src/
 │   └── eda.py                    Session 1 EDA script
 ├── reports/
 │   └── milestone1_report.md      B9 report (max 2 pages)
 ├── outputs/                      GENERATED files only (re-created by the scripts, never edited by hand)
 │   ├── splits/                   train.csv, val.csv, test.csv (one row per image) + split_info.json (seed, date)
+│   ├── baseline/                 M2: feature table (cache), validation results of every configuration,
+│   │                             test results (JSON), test accuracy per diagnosis
 │   ├── figures/                  class distribution, 11→diagnosis_1 mapping, class gallery,
 │   │                             augmentation examples, transformed training batch
 │   ├── label_map.json            B3 label mapping, loaded by every later milestone
@@ -130,3 +138,19 @@ Details and numbers: [reports/milestone1_report.md](reports/milestone1_report.md
   for the training loader.
 - **Banned inputs:** label columns, `diagnosis_confirm_type`, `image_manipulation`, contributor columns
   (see `outputs/data_quality_report.md`).
+
+## 6. Milestone 2 — classical ML baseline
+
+Notebook: [notebooks/classical_baseline.ipynb](notebooks/classical_baseline.ipynb) (experiments and the written report).
+
+- **Features** (`milk10k_pipeline/features.py`): every dermoscopic image resized to 256×256 → 45 numbers in
+  5 groups: colour statistics (6), colour histograms (24), texture from the Session 4 filters (3), GLCM (4),
+  ABCD-style asymmetry and rough-mask features (8). Computed once and cached in `outputs/baseline/features_dermoscopic.csv`.
+- **Feature sets compared:** colour (30), texture (3), colour+texture (33, the Session 5 vector),
+  colour+texture+GLCM (37), all incl. ABCD (45).
+- **Models** (`milk10k_pipeline/classical.py`): majority class (floor), logistic regression, kNN, random forest,
+  SVM (RBF); median imputer + StandardScaler fitted on train only; `class_weight="balanced"` where available.
+- **Selection:** best **validation macro-F1** over all feature sets × models × hyper-parameters.
+  The test split is used once, for the chosen configuration (with 95 % bootstrap intervals).
+- **Extra:** the same grid on the 3 original classes (Benign / Malignant / Indeterminate), as in the Session 5 slides.
+
