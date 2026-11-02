@@ -14,3 +14,6 @@ venv/
 # os
 .DS_Store
 Thumbs.db
+
+# image cache of the Session 6 notebook (re-created automatically)
+outputs/mlp/pixels32.npz

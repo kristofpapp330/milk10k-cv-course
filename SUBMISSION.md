@@ -53,3 +53,13 @@
 | final test results | [outputs/baseline/test_results.json](outputs/baseline/test_results.json) |
 | figures | `outputs/figures/baseline_*.png` |
 
+## Session 6 homework — MLP
+| item | file |
+|---|---|
+| notebook (scoreboard, nn.Conv2d, MLP on raw pixels) | [notebooks/homework_mlp.ipynb](notebooks/homework_mlp.ipynb) |
+| notebook exported to PDF | [notebooks/homework_mlp.pdf](notebooks/homework_mlp.pdf) |
+| MLP + training loop code | [milk10k_pipeline/mlp.py](milk10k_pipeline/mlp.py) |
+| tests | [tests/test_mlp.py](tests/test_mlp.py) |
+| scoreboard | [outputs/mlp/scoreboard.csv](outputs/mlp/scoreboard.csv) |
+| every MLP run (validation) | [outputs/mlp/val_results_all_runs.csv](outputs/mlp/val_results_all_runs.csv) |
+

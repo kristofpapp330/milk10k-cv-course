@@ -1,0 +1,118 @@
+{
+  "45 features | binary": {
+    "input": "45 features",
+    "task": "binary",
+    "chosen config": "deep (64,64) + dropout/wd",
+    "n_params": 7234,
+    "val mean": 0.7504691737888679,
+    "val sd": 0.0020772591737707757,
+    "test mean": 0.7284931353924673,
+    "test sd": 0.0010881401641190521,
+    "test ROC-AUC": 0.7903675040289309,
+    "best epochs": [
+      19,
+      23,
+      23
+    ]
+  },
+  "45 features | 3-class": {
+    "input": "45 features",
+    "task": "3-class",
+    "chosen config": "wide (256) + dropout/wd",
+    "n_params": 12547,
+    "val mean": 0.5585733560226255,
+    "val sd": 0.0015217060056598257,
+    "test mean": 0.54855100728339,
+    "test sd": 0.0062500278824164,
+    "test ROC-AUC": NaN,
+    "best epochs": [
+      30,
+      48,
+      43
+    ]
+  },
+  "33 features (Session 5) | binary": {
+    "input": "33 features (Session 5)",
+    "task": "binary",
+    "chosen config": "wide (256) + dropout/wd",
+    "n_params": 9218,
+    "val mean": 0.7383990992438898,
+    "val sd": 0.0021757048369716882,
+    "test mean": 0.7134999421801712,
+    "test sd": 0.0014706399184712812,
+    "test ROC-AUC": 0.7862432491204866,
+    "best epochs": [
+      18,
+      18,
+      14
+    ]
+  },
+  "33 features (Session 5) | 3-class": {
+    "input": "33 features (Session 5)",
+    "task": "3-class",
+    "chosen config": "wide (256) + dropout/wd",
+    "n_params": 9475,
+    "val mean": 0.5370128197445491,
+    "val sd": 0.004565902208644843,
+    "test mean": 0.49213969178947387,
+    "test sd": 0.0003276508408192497,
+    "test ROC-AUC": NaN,
+    "best epochs": [
+      40,
+      44,
+      50
+    ]
+  },
+  "raw pixels 32x32x3 | binary": {
+    "input": "raw pixels 32x32x3",
+    "task": "binary",
+    "chosen config": "deep (64,64) + dropout/wd",
+    "n_params": 200962,
+    "val mean": 0.7350504354056535,
+    "val sd": 0.0022577729976766994,
+    "test mean": 0.7279304598683435,
+    "test sd": 0.006009134476540253,
+    "test ROC-AUC": 0.7851529802172793,
+    "best epochs": [
+      21,
+      23,
+      14
+    ]
+  },
+  "raw pixels 32x32x3 | 3-class": {
+    "input": "raw pixels 32x32x3",
+    "task": "3-class",
+    "chosen config": "deep (64,64) + dropout/wd",
+    "n_params": 201027,
+    "val mean": 0.5403275150043892,
+    "val sd": 0.004676246263862474,
+    "test mean": 0.5251072474333403,
+    "test sd": 0.008005476694327442,
+    "test ROC-AUC": NaN,
+    "best epochs": [
+      48,
+      22,
+      45
+    ]
+  },
+  "shuffled pixels | binary": {
+    "input": "shuffled pixels",
+    "task": "binary",
+    "chosen config": "deep (64,64) + dropout/wd",
+    "val mean": 0.7325324555837293,
+    "val sd": 0.004324248498530609,
+    "test mean": 0.7311437039132708,
+    "test sd": 0.0027239136478285197,
+    "best epochs": []
+  },
+  "shuffled pixels | 3-class": {
+    "input": "shuffled pixels",
+    "task": "3-class",
+    "chosen config": "deep (64,64) + dropout/wd",
+    "val mean": 0.5418442463883001,
+    "val sd": 0.004264146155345993,
+    "test mean": 0.5054471887510475,
+    "test sd": 0.019913398382285123,
+    "best epochs": []
+  }
+}

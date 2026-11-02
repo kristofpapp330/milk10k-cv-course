@@ -1,0 +1,6 @@
+model,input,chosen config (binary / 3-class),parameters,binary val,binary test,3-class val,3-class test
+majority class (floor),—,—,0,0.418,0.417,0.272,0.273
+Session 5 baseline: SVM,45 features,"RBF, C=3 / RBF, C=3",—,0.741,0.721,0.567,0.518
+MLP,33 features (Session 5),wide (256) + dropout/wd / wide (256) + dropout/wd,9218,0.738 ± 0.002,0.713 ± 0.001,0.537 ± 0.005,0.492 ± 0.000
+MLP,45 features,"deep (64,64) + dropout/wd / wide (256) + dropout/wd",7234,0.750 ± 0.002,0.728 ± 0.001,0.559 ± 0.002,0.549 ± 0.006
+MLP,raw pixels 32x32x3,"deep (64,64) + dropout/wd / deep (64,64) + dropout/wd",200962,0.735 ± 0.002,0.728 ± 0.006,0.540 ± 0.005,0.525 ± 0.008

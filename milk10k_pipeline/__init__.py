@@ -29,6 +29,10 @@ Added in Milestone 2 (classical ML baseline)
 --------------------------------------------
 features             -- handcrafted colour / texture / GLCM / ABCD features and the feature sets
 classical            -- classical models, validation-based selection, metrics, bootstrap intervals
+
+Added in Session 6
+------------------
+mlp                  -- PyTorch MLP, training loop (class weights, early stopping), 32x32 pixel loader
 """
 
 from . import metadata_analysis
@@ -37,7 +41,7 @@ from . import preprocessing
 from . import data_loader
 from . import visualizer
 from . import config, data_io, integrity, labels, quality, splits, transforms
-from . import features, classical
+from . import features, classical, mlp
 
 __all__ = [
     "metadata_analysis",
@@ -54,4 +58,5 @@ __all__ = [
     "transforms",
     "features",
     "classical",
+    "mlp",
 ]
