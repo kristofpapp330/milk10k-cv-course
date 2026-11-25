@@ -17,3 +17,10 @@ Thumbs.db
 
 # image cache of the Session 6 notebook (re-created automatically)
 outputs/mlp/pixels32.npz
+
+# Milestones 3-5: local working files, leaderboard test images (not ours to redistribute), zips
+outputs/deep_work/
+MILK10k_Test_Input/
+MILK10k_Test_Metadata.csv
+results_for_repo.zip
+*.npz.tmp

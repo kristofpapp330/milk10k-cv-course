@@ -63,3 +63,18 @@
 | scoreboard | [outputs/mlp/scoreboard.csv](outputs/mlp/scoreboard.csv) |
 | every MLP run (validation) | [outputs/mlp/val_results_all_runs.csv](outputs/mlp/val_results_all_runs.csv) |
 
+## Final project — Milestones 3, 4, 5
+| item | file |
+|---|---|
+| final report | [report.pdf](report.pdf) |
+| model card | [model_card.md](model_card.md) |
+| M3 notebook: CNN from scratch, ResNet-18 | [notebooks/m3_deep_models.ipynb](notebooks/m3_deep_models.ipynb) |
+| M4 notebook: ViT-B/16, scoreboard, error analysis, fairness | [notebooks/m4_best_model.ipynb](notebooks/m4_best_model.ipynb) |
+| M5 notebook: 11-class model, leaderboard estimate | [notebooks/m5_final_11class.ipynb](notebooks/m5_final_11class.ipynb) |
+| scoreboard M2 → M4 (3 classes) | [outputs/deep/scoreboard_3class.csv](outputs/deep/scoreboard_3class.csv) |
+| M4 checkpoint and test predictions | `outputs/deep/model_m4.pt`, [outputs/deep/m4_test_predictions.csv](outputs/deep/m4_test_predictions.csv) |
+| predict() | [m5_final/predict.py](m5_final/predict.py) |
+| leaderboard file code / file / proof | [m5_final/make_submission.py](m5_final/make_submission.py), [m5_final/submission.csv](m5_final/submission.csv), [m5_final/leaderboard.png](m5_final/leaderboard.png) |
+| deep-learning code | [milk10k_pipeline/deep.py](milk10k_pipeline/deep.py), [milk10k_pipeline/evaluation.py](milk10k_pipeline/evaluation.py) |
+| tests | [tests/test_deep.py](tests/test_deep.py) |
+

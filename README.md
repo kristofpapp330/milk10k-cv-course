@@ -37,12 +37,25 @@ Commands (run from the repository root):
 
 | what | command |
 |---|---|
-| tests (no dataset needed) | `python tests/test_pipeline.py`, `python tests/test_features.py`, `python tests/test_mlp.py` |
+| tests (no dataset, no internet needed) | `python tests/test_pipeline.py`, `python tests/test_features.py`, `python tests/test_mlp.py`, `python tests/test_deep.py` |
 | full Milestone 1 pipeline: integrity check, EDA figures, label map, quality report, splits, normalization stats, transforms check, class weights, DataLoader sanity checks | `python run_milestone1.py` |
 | Part A homework | open `notebooks/homework_part_a.ipynb` → Restart & Run All |
 | Session 6 homework: MLP on features and on raw pixels, scoreboard, nn.Conv2d | open `notebooks/homework_mlp.ipynb` → Restart & Run All |
 | Milestone 2: classical ML baseline (features, model comparison, test evaluation, report) | open `notebooks/classical_baseline.ipynb` → Restart & Run All (needs the Milestone 1 splits in `outputs/splits/`) |
 | Session 2 analysis (metadata + colour figures) | `python run_analysis.py` |
+| **Milestone 3** — CNN from scratch, ResNet-18 (frozen, fine-tuned) | open `notebooks/m3_deep_models.ipynb` **in Google Colab** (T4 GPU) → Run all |
+| **Milestone 4** — ViT-B/16, scoreboard, error analysis, fairness | `notebooks/m4_best_model.ipynb` in Colab, after M3 |
+| **Milestone 5** — 11-class model, leaderboard estimate | `notebooks/m5_final_11class.ipynb` in Colab, after M4 |
+| **predict one new image** (laptop, CPU) | `python m5_final/predict.py path/to/image.jpg` |
+| **leaderboard file** (laptop, CPU, ~2 min) | `python m5_final/make_submission.py --test-dir MILK10k_Test_Input --metadata MILK10k_Test_Metadata.csv` |
+
+**Colab notes (Milestones 3–5).** Each notebook clones this repository, downloads MILK10k (or reads
+`MyDrive/milk10k_project/milk10k.zip`), and keeps its image cache, predictions and checkpoints in
+`MyDrive/milk10k_project/`, so the three notebooks build on each other. The M5 notebook ends by writing
+`MyDrive/milk10k_project/results_for_repo.zip`: unzipped into the repository root it adds `outputs/deep/`
+and `m5_final/model_11class.pt`. `predict.py` and `make_submission.py` run on any laptop: the first call
+downloads the ImageNet backbone weights from torchvision once (the checkpoint only holds the weights
+trained on MILK10k).
 
 `run_milestone1.py` takes a few minutes (it verifies all 10,480 images and loads one training epoch) and
 writes everything to `outputs/`, including `outputs/run_log.txt` with all printed checks.
@@ -74,18 +87,31 @@ milk10k-cv-course/
 │   ├── transforms.py             B7: train_transform / eval_transform + augmentation justification table
 │   ├── features.py               M2: handcrafted features (colour, histogram, texture, GLCM, ABCD) + feature sets
 │   ├── classical.py              M2: classical models + grids, validation selection, metrics, bootstrap CI
-│   └── mlp.py                    Session 6: PyTorch MLP, training loop (class weights, early stopping), 32x32 pixel loader
+│   ├── mlp.py                    Session 6: PyTorch MLP, training loop (class weights, early stopping), 32x32 pixel loader
+│   ├── deep.py                   M3-M5: preprocessing (ONE inference transform), CNN / ResNet-18 / ViT-B/16, freezing,
+│   │                             training loop, frozen embeddings, checkpoints
+│   └── evaluation.py             M4-M5: leaderboard metric (0.5 rule), per-class thresholds, bootstrap, fairness by group
 ├── tests/
 │   ├── test_pipeline.py          split properties (10 seeds), deterministic eval transform, fail-loudly, class weights
 │   ├── test_features.py          M2: features reproduce the Session 5 hand calculations, models beat majority
-│   └── test_mlp.py               Session 6: nn.Conv2d / forward pass / backprop reproduce the Session 4 and 6 hand calculations
+│   ├── test_mlp.py               Session 6: nn.Conv2d / forward pass / backprop reproduce the Session 4 and 6 hand calculations
+│   └── test_deep.py              M3-M5: Session 7 parameter counts, preprocessing, frozen BN, leaderboard metric, file format
 ├── notebooks/
 │   ├── 01_eda.ipynb              Session 1 exploration
 │   ├── homework_part_a.ipynb     Part A exercises (Sessions 1–3)
 │   ├── homework_part_a.pdf       Part A exported to PDF
 │   ├── homework_filters.ipynb    Session 4 homework (learned filters, Gaussian blur, Canny vs Sobel)
 │   ├── classical_baseline.ipynb  Milestone 2: classical ML baseline, experiments + report (+ PDF)
-│   └── homework_mlp.ipynb        Session 6 homework: MLP scoreboard, nn.Conv2d, MLP on raw pixels (+ PDF)
+│   ├── homework_mlp.ipynb        Session 6 homework: MLP scoreboard, nn.Conv2d, MLP on raw pixels (+ PDF)
+│   ├── m3_deep_models.ipynb      M3 (Colab): CNN from scratch, ResNet-18 frozen / fine-tuned
+│   ├── m4_best_model.ipynb       M4 (Colab): ViT-B/16, scoreboard M2-M4, error analysis, fairness, model_m4.pt
+│   └── m5_final_11class.ipynb    M5 (Colab): 11-class retrain, leaderboard estimate, thresholds
+├── m5_final/
+│   ├── predict.py                predict(image_path) -> 11 class probabilities (validation transform)
+│   ├── make_submission.py        submission.csv for the official leaderboard (+ the 4 format checks)
+│   ├── model_11class.pt          final model (only the weights trained on MILK10k)
+│   ├── submission.csv            the uploaded file
+│   └── leaderboard.png           screenshot of the official result
 ├── src/
 │   └── eda.py                    Session 1 EDA script
 ├── reports/
@@ -94,6 +120,9 @@ milk10k-cv-course/
 │   ├── splits/                   train.csv, val.csv, test.csv (one row per image) + split_info.json (seed, date)
 │   ├── baseline/                 M2: feature table (cache), validation results of every configuration,
 │   │                             test results (JSON), test accuracy per diagnosis
+│   ├── deep/                     M3-M5: scoreboard_3class.csv, models.json, predictions/*.npz (val + test
+│   │                             probabilities of every deep model), histories, figures, model_m4.pt,
+│   │                             m4_test_predictions.csv, fairness tables, leaderboard estimate
 │   ├── mlp/                      Session 6: scoreboard.csv, every MLP run on validation, summary.json
 │   │                             (pixels32.npz = image cache, NOT committed)
 │   ├── figures/                  class distribution, 11→diagnosis_1 mapping, class gallery,

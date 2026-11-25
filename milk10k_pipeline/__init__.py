@@ -33,6 +33,11 @@ classical            -- classical models, validation-based selection, metrics, b
 Added in Session 6
 ------------------
 mlp                  -- PyTorch MLP, training loop (class weights, early stopping), 32x32 pixel loader
+
+Added in Milestones 3-5
+-----------------------
+deep                 -- preprocessing, CNN from scratch / ResNet-18 / ViT-B/16, training loop, checkpoints
+evaluation           -- leaderboard metric, per-class thresholds, bootstrap intervals, fairness by group
 """
 
 from . import metadata_analysis
@@ -42,6 +47,7 @@ from . import data_loader
 from . import visualizer
 from . import config, data_io, integrity, labels, quality, splits, transforms
 from . import features, classical, mlp
+from . import deep, evaluation
 
 __all__ = [
     "metadata_analysis",
@@ -59,4 +65,6 @@ __all__ = [
     "features",
     "classical",
     "mlp",
+    "deep",
+    "evaluation",
 ]

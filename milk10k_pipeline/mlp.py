@@ -63,7 +63,7 @@ def n_parameters(model):
 def class_weights(y, n_classes):
     """Session 6 'Class imbalance' slide: weight_c = n / (K * n_c), computed on TRAIN labels."""
     counts = np.bincount(y, minlength=n_classes)
-    return len(y) / (n_classes * counts)
+    return len(y) / (n_classes * np.maximum(counts, 1))     # a class absent from train gets a finite weight
 
 
 # --------------------------------------------------------------------------------------------------
