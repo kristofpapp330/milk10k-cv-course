@@ -2,23 +2,44 @@
 
 Computer Vision and Speech Recognition (EADA). Author: Kristof Papp.
 
+## 0. Final results (Milestones 1–5) at a glance
+
+| | value |
+|---|---|
+| **analysis target** | 3 classes, `diagnosis_1` (Benign / Malignant / Indeterminate), "Path A" of the brief |
+| **best 3-class model** | ResNet-18 (ImageNet) fine-tuned, layer3 + layer4 + head: validation macro-F1 **0.633**, test **0.578** |
+| **classical baseline** (M2) | SVM on 45 handcrafted features: validation 0.567, test 0.518 |
+| **final 11-class model** | same architecture, 11 outputs: validation macro-F1 0.356 (argmax) |
+| **official MILK10k leaderboard** | **0.362** (approach `EADA-CV26-KP`); our local estimate was 0.389 |
+
+Full write-up: [report.pdf](report.pdf) · model card: [model_card.md](model_card.md) · deliverable index: [SUBMISSION.md](SUBMISSION.md)
+
+**Where each milestone lives** (the brief suggests `m1_data/ … m5_final/` folders; this repository keeps one
+shared package `milk10k_pipeline/` and one notebook per milestone instead, so no code is duplicated):
+
+| milestone | notebook / script | code |
+|---|---|---|
+| M1 data pipeline | `run_milestone1.py`, `reports/milestone1_report.md` | `data_io`, `integrity`, `labels`, `quality`, `splits`, `transforms`, `data_loader` |
+| M2 classical baseline | `notebooks/classical_baseline.ipynb` | `features`, `classical` |
+| M3 MLP + CNN + ResNet-18 | `notebooks/homework_mlp.ipynb`, `notebooks/m3_deep_models.ipynb` (Colab) | `mlp`, `deep` |
+| M4 best model, errors, fairness | `notebooks/m4_best_model.ipynb` (Colab), `run_fairness_skin_tone.py` | `deep`, `evaluation` |
+| M5 final pipeline + leaderboard | `notebooks/m5_final_11class.ipynb` (Colab), `m5_final/` | `deep`, `evaluation` |
+
 ## 1. What this project is
 
-**Task.** Classify a skin lesion from its **dermoscopic image** as **Benign** or **Malignant**
-(`diagnosis_1`, with *Indeterminate* merged into Malignant, see [label strategy](#5-key-decisions-so-far)).
-Stretch goal: the 11 diagnostic classes (AKIEC, BCC, BEN_OTH, BKL, DF, INF, MAL_OTH, MEL, NV, SCCKA, VASC).
-The model is meant as decision support for a clinician deciding whether a lesion needs work-up / biopsy.
+**Task.** Classify a skin lesion from its **dermoscopic image**. Milestones 1–2 started with **Benign vs Malignant**
+(Indeterminate merged into Malignant, see [label strategy](#5-key-decisions-so-far)); from the Session 5 scoreboard on,
+every model is also compared on the **3 classes of `diagnosis_1`**, which is the analysis target of the final report.
+The leaderboard model predicts the **11 diagnoses** (AKIEC, BCC, BEN_OTH, BKL, DF, INF, MAL_OTH, MEL, NV, SCCKA, VASC).
+The model is meant as decision support for a clinician deciding whether a lesion needs work-up / biopsy, never as a diagnosis.
 
-**Dataset.** [MILK10k](https://api.isic-archive.com/doi/milk10k/) from the ISIC Archive (DOI 10.34970/648456):
+**Dataset.** [MILK10k](https://api.isic-archive.com/doi/milk10k/) from the ISIC Archive:
 5,240 lesions, each with 2 images (1 dermoscopic + 1 clinical close-up) = 10,480 JPEG images, plus
 `metadata.csv` (one row per image) and `supplements/training_gt.csv` (one-hot 11-class label per lesion).
-License: **CC BY-NC** (non-commercial use with attribution). Attribution: MILK10k / ISIC Archive;
-described in *"MILK10k: A Hierarchical Multimodal Imaging-Learning Toolkit for Diagnosing Pigmented and
-Nonpigmented Skin Cancer and its Simulators"*, Journal of Investigative Dermatology, 2025, doi:10.1016/j.jid.2025.06.1594.
-
-**Goal of Milestone 1.** A leak-free, reproducible data pipeline: integrity check, label strategy,
-data-quality report, lesion-level splits, transforms, and the Dataset/DataLoaders that later milestones
-will train on. It is an evolution of the Session 2 code (`milk10k_pipeline/`), not a rewrite.
+License: **CC BY-NC** (non-commercial use with attribution). Cite: MILK study team. MILK10k Benchmark. ISIC Archive,
+2025. doi:10.34970/262082 · Tschandl P, et al. MILK10k: A Hierarchical Multimodal Imaging-Learning Toolkit for
+Diagnosing Pigmented and Nonpigmented Skin Cancer and its Simulators. J Invest Dermatol. 2026;146(2):357-364.
+doi:10.1016/j.jid.2025.06.1594.
 
 ## 2. Setup and how to run
 
@@ -48,6 +69,7 @@ Commands (run from the repository root):
 | **Milestone 5** — 11-class model, leaderboard estimate | `notebooks/m5_final_11class.ipynb` in Colab, after M4 |
 | **predict one new image** (laptop, CPU) | `python m5_final/predict.py path/to/image.jpg` |
 | **leaderboard file** (laptop, CPU, ~2 min) | `python m5_final/make_submission.py --test-dir MILK10k_Test_Input --metadata MILK10k_Test_Metadata.csv` |
+| **fairness by skin tone** (laptop, seconds) | `python run_fairness_skin_tone.py --metadata MILK10k_Training_Metadata.csv` (challenge training metadata: the MILK10k download has no skin-tone column) |
 
 **Colab notes (Milestones 3–5).** Each notebook clones this repository, downloads MILK10k (or reads
 `MyDrive/milk10k_project/milk10k.zip`), and keeps its image cache, predictions and checkpoints in

@@ -1,0 +1,5 @@
+model,val macro-F1,trainable params,best epoch,sec / epoch,minutes
+CNN from scratch,0.5245,390147,11,18.3,5.8
+ResNet-18 frozen + head,0.6034,1539,9,,
+ResNet-18 fine-tune layer4,0.6207,8395267,12,16.7,4.2
+ResNet-18 fine-tune layer3+4,0.6326,10494979,15,16.9,4.2

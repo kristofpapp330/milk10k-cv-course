@@ -3,7 +3,7 @@ Milestone 5 -- the official MILK10k leaderboard file (Session 10).
 
     python m5_final/make_submission.py --test-dir MILK10k_Test_Input --metadata MILK10k_Test_Metadata.csv
 
-Output: m5_final/submission.csv, one row per lesion (479), columns: lesion, AKIEC, BCC, ..., VASC.
+Output: m5_final/submission.csv, one row per lesion (479), columns: lesion_id, AKIEC, BCC, ..., VASC.
 
 Steps
   1. keep the dermoscopic image of every test lesion (the model was trained on dermoscopic images only)
@@ -30,10 +30,38 @@ from milk10k_pipeline.evaluation import rescale_to_half                         
 EXPECTED_LESIONS = 479
 
 
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff"}
+
+
+def find_test_images(test_dir):
+    """{isic_id: path} for every image file below test_dir, any extension, any letter case."""
+    return {p.stem: p for p in Path(test_dir).rglob("*") if p.is_file() and p.suffix.lower() in IMAGE_EXTENSIONS}
+
+
+def diagnose(test_dir, missing, metadata_csv):
+    """Explain why images are missing: wrong folder, incomplete unzip, or a different file format."""
+    from collections import Counter
+    files = [p for p in Path(test_dir).rglob("*") if p.is_file()]
+    print(f"\nDIAGNOSIS: folder '{Path(test_dir).resolve()}' contains {len(files)} files")
+    print("  file types:", dict(Counter(p.suffix.lower() for p in files)))
+    print("  lesion folders:", len({p.parent for p in files}))
+    any_name = [p for p in files if missing[0] in p.name]
+    print(f"  a file containing '{missing[0]}' in its name: {any_name[:1] or 'none'}")
+    meta = pd.read_csv(metadata_csv)
+    print(f"  metadata: {len(meta)} rows, {meta['lesion_id'].nunique()} lesions, image types {meta['image_type'].value_counts().to_dict()}")
+    for zip_path in [Path(test_dir).with_suffix(".zip"), Path(str(test_dir) + ".zip")]:
+        if zip_path.exists():
+            import zipfile
+            names = zipfile.ZipFile(zip_path).namelist()
+            inside = [n for n in names if missing[0] in n]
+            print(f"  {zip_path.name} holds {len(names)} entries; '{missing[0]}' inside the zip: {inside[:1] or 'no'}")
+            break
+
+
 def check_submission(sub, n_expected=EXPECTED_LESIONS):
     """The 4 lines of the brief. Raises AssertionError if the file would be rejected."""
-    assert list(sub.columns) == ["lesion"] + CLASSES11, "wrong columns or wrong column order"
-    assert len(sub) == n_expected and sub.lesion.is_unique, f"need {n_expected} unique lesions, got {len(sub)}"
+    assert list(sub.columns) == ["lesion_id"] + CLASSES11, "wrong columns or wrong column order"
+    assert len(sub) == n_expected and sub.lesion_id.is_unique, f"need {n_expected} unique lesions, got {len(sub)}"
     assert sub[CLASSES11].isna().sum().sum() == 0, "empty cells"
     assert ((sub[CLASSES11] >= 0) & (sub[CLASSES11] <= 1)).all().all(), "values outside [0, 1]"
 
@@ -45,8 +73,10 @@ def make_submission(test_dir, metadata_csv, checkpoint, out_csv, use_thresholds=
     assert ckpt["classes"] == CLASSES11, "this is not the 11-class model"
     meta = pd.read_csv(metadata_csv)
     derm = meta[meta["image_type"].str.contains("dermoscop", case=False)].drop_duplicates("lesion_id")
-    paths = {p.stem: p for p in Path(test_dir).rglob("*.jpg")}            # works with or without sub-folders
+    paths = find_test_images(test_dir)                                    # works with or without sub-folders
     missing = [i for i in derm["isic_id"] if i not in paths]
+    if missing:
+        diagnose(test_dir, missing, metadata_csv)
     assert not missing, f"{len(missing)} dermoscopic test images not found, e.g. {missing[:3]}"
 
     probs = []
@@ -66,7 +96,7 @@ def make_submission(test_dir, metadata_csv, checkpoint, out_csv, use_thresholds=
         print("\nraw softmax probabilities")
 
     sub = pd.DataFrame(probs, columns=CLASSES11)
-    sub.insert(0, "lesion", derm["lesion_id"].to_numpy())
+    sub.insert(0, "lesion_id", derm["lesion_id"].to_numpy())   # the ISIC validator wants "lesion_id"
     check_submission(sub, n_expected)
     Path(out_csv).parent.mkdir(parents=True, exist_ok=True)
     sub.to_csv(out_csv, index=False)

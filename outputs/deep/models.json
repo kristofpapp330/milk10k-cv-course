@@ -1,0 +1,87 @@
+{
+  "CNN from scratch": {
+    "predictions": "CNN_from_scratch.npz",
+    "val_macro_f1": 0.5245,
+    "kind": "finetune",
+    "arch": "cnn_scratch",
+    "trainable params": 390147,
+    "best epoch": 11,
+    "minutes": 5.8,
+    "sec per epoch": 18.3,
+    "checkpoint": "CNN_from_scratch.pt"
+  },
+  "ResNet-18 frozen + head": {
+    "predictions": "ResNet-18_frozen_and_head.npz",
+    "val_macro_f1": 0.6034,
+    "kind": "frozen",
+    "arch": "resnet18",
+    "trainable params": 1539,
+    "seed val macro-F1 (3 seeds)": [
+      0.603,
+      0.603,
+      0.595
+    ],
+    "chosen seed": 0,
+    "best epoch": 9,
+    "checkpoint": "ResNet-18_frozen_and_head.pt"
+  },
+  "ResNet-18 fine-tune layer4": {
+    "predictions": "ResNet-18_fine-tune_layer4.npz",
+    "val_macro_f1": 0.6207,
+    "kind": "finetune",
+    "arch": "resnet18",
+    "trainable params": 8395267,
+    "best epoch": 12,
+    "minutes": 4.2,
+    "sec per epoch": 16.7,
+    "checkpoint": "ResNet-18_fine-tune_layer4.pt"
+  },
+  "ResNet-18 fine-tune layer3+4": {
+    "predictions": "ResNet-18_fine-tune_layer3and4.npz",
+    "val_macro_f1": 0.6326,
+    "kind": "finetune",
+    "arch": "resnet18",
+    "trainable params": 10494979,
+    "best epoch": 15,
+    "minutes": 4.2,
+    "sec per epoch": 16.9,
+    "checkpoint": "ResNet-18_fine-tune_layer3and4.pt"
+  },
+  "ViT-B/16 frozen + head": {
+    "predictions": "ViT-B-16_frozen_and_head.npz",
+    "val_macro_f1": 0.6185,
+    "kind": "frozen",
+    "arch": "vit_b_16",
+    "trainable params": 2307,
+    "seed val macro-F1 (3 seeds)": [
+      0.606,
+      0.611,
+      0.618
+    ],
+    "chosen seed": 2,
+    "best epoch": 19,
+    "checkpoint": "ViT-B-16_frozen_and_head.pt"
+  },
+  "ViT-B/16 fine-tune last 2 blocks": {
+    "predictions": "ViT-B-16_fine-tune_last_2_blocks.npz",
+    "val_macro_f1": 0.6157,
+    "kind": "finetune",
+    "arch": "vit_b_16",
+    "trainable params": 14179587,
+    "best epoch": 9,
+    "minutes": 3.7,
+    "sec per epoch": 22.1,
+    "checkpoint": "ViT-B-16_fine-tune_last_2_blocks.pt"
+  },
+  "ResNet-18 fine-tune layer3+4 (11-class)": {
+    "predictions": "ResNet-18_fine-tune_layer3and4_(11-class).npz",
+    "val_macro_f1": 0.3564,
+    "kind": "finetune",
+    "arch": "resnet18",
+    "trainable params": 10499083,
+    "best epoch": 5,
+    "minutes": 3.0,
+    "sec per epoch": 17.8,
+    "checkpoint": "ResNet-18_fine-tune_layer3and4_(11-class).pt"
+  }
+}

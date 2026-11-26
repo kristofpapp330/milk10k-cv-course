@@ -1,0 +1,11 @@
+milestone,model,val macro-F1,test macro-F1,test 95% CI,chosen
+—,majority class (floor),0.272385252069225,0.27311948977677736,,
+M2 (S5),SVM (RBF) on 45 handcrafted features,0.5673056217882948,0.5181151381003003,,
+M3 (S6),MLP on 45 handcrafted features (mean of 3 seeds),0.5585733560226255,0.54855100728339,,
+M3 (S6),MLP on raw pixels 32×32×3 (mean of 3 seeds),0.5403275150043892,0.5251072474333403,,
+M3 (S7),CNN from scratch,0.5245182798789731,0.469565973808529,"[0.431, 0.507]",
+M3 (S7),ResNet-18 frozen + head,0.6034068413347408,0.5710316565573152,"[0.517, 0.626]",
+M3 (S7),ResNet-18 fine-tune layer4,0.6206518453200845,0.6224551698073866,"[0.559, 0.681]",
+M3 (S7),ResNet-18 fine-tune layer3+4,0.6326473968742854,0.5782508464808012,"[0.523, 0.634]",◀ best on validation
+M4 (S9),ViT-B/16 frozen + head,0.6184628260917446,0.5829047209264252,"[0.532, 0.633]",
+M4 (S9),ViT-B/16 fine-tune last 2 blocks,0.6157282468647881,0.5967550528990467,"[0.550, 0.646]",

@@ -119,7 +119,7 @@ def test_predict_and_submission_files():
         assert list(probs) == deep.CLASSES11 and abs(sum(probs.values()) - 1) < 1e-5
         sub = make_submission(d / "MILK10k_Test_Input", d / "meta.csv", ck, d / "submission.csv", n_expected=5)
         check_submission(pd.read_csv(d / "submission.csv"), n_expected=5)
-        assert list(sub.lesion) == [f"IL_{k:07d}" for k in range(5)]          # one row per lesion, not per image
+        assert list(sub.lesion_id) == [f"IL_{k:07d}" for k in range(5)]          # one row per lesion, not per image
 
 
 if __name__ == "__main__":

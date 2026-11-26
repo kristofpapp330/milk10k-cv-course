@@ -75,6 +75,7 @@
 | M4 checkpoint and test predictions | `outputs/deep/model_m4.pt`, [outputs/deep/m4_test_predictions.csv](outputs/deep/m4_test_predictions.csv) |
 | predict() | [m5_final/predict.py](m5_final/predict.py) |
 | leaderboard file code / file / proof | [m5_final/make_submission.py](m5_final/make_submission.py), [m5_final/submission.csv](m5_final/submission.csv), [m5_final/leaderboard.png](m5_final/leaderboard.png) |
+| fairness by skin tone | [run_fairness_skin_tone.py](run_fairness_skin_tone.py), [outputs/deep/m4_fairness_skin_tone_class.csv](outputs/deep/m4_fairness_skin_tone_class.csv) |
 | deep-learning code | [milk10k_pipeline/deep.py](milk10k_pipeline/deep.py), [milk10k_pipeline/evaluation.py](milk10k_pipeline/evaluation.py) |
 | tests | [tests/test_deep.py](tests/test_deep.py) |
 

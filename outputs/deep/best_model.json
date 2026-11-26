@@ -1,0 +1,25 @@
+{
+  "name": "ResNet-18 fine-tune layer3+4",
+  "predictions": "ResNet-18_fine-tune_layer3and4.npz",
+  "val_macro_f1": 0.6326,
+  "kind": "finetune",
+  "arch": "resnet18",
+  "trainable params": 10494979,
+  "best epoch": 15,
+  "minutes": 4.2,
+  "sec per epoch": 16.9,
+  "checkpoint": "ResNet-18_fine-tune_layer3and4.pt",
+  "recipe": {
+    "arch": "resnet18",
+    "pretrained": true,
+    "trainable": [
+      "layer3",
+      "layer4",
+      "fc"
+    ],
+    "lr_head": 0.001,
+    "lr_backbone": 0.0001,
+    "epochs": 15,
+    "patience": 5
+  }
+}
